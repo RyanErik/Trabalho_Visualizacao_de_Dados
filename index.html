@@ -1,16 +1,277 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <title>Gráfico de Ameaças</title>
+<meta charset="UTF-8" />
+<title>Espécies Ameaçadas de Extinção</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f6f8;
+    color: #333;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 2rem;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    max-width: 900px;
+    margin-bottom: 3rem;
+  }
+
+  header h1 {
+    font-weight: 800;
+    font-size: 2.5rem; /* diminuído */
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+    color: #2c7a7b; /* azul esverdeado */
+  }
+
+  header p {
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+    color: #555;
+  }
+
+  /* Cards mockados no topo */
+  #cardsGrupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+    max-width: 1300px;
+    margin-bottom: 3rem;
+  }
+
+  #cardsGrupo .card {
+    border-radius: 12px;
+    padding: 10px 14px;  /* diminuído */
+    width: 120px;        /* diminuído */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #cardsGrupo .card img {
+    width: 36px;     /* diminuído */
+    height: 36px;    /* diminuído */
+    margin-bottom: 8px; /* diminuído */
+    object-fit: contain;
+  }
+
+  #cardsGrupo .grupo {
+    font-size: 12px; /* diminuído */
+    opacity: 0.9;
+    margin-bottom: 4px; /* diminuído */
+  }
+  #cardsGrupo .total {
+    font-size: 18px; /* diminuído */
+    font-weight: bold;
+  }
+
+  /* Cores conforme esquemaCoresPorGrupo */
+  .reds { background-color: #d53e4f; }
+  .lighttealblue { background-color: #7fcdbb; color: #000; }
+  .oranges { background-color: #fdae61; color: #000; }
+  .browns { background-color: #a6611a; }
+  .bluepurple { background-color: #5e3c99; }
+  .purples { background-color: #8073ac; }
+  .yellowgreen { background-color: #d9f0a3; color: #000; }
+  .teals { background-color: #456a79; }
+  .greens { background-color: #238b45; }
+  .tealblues { background-color: #0b98e4; }
+  .greys { background-color: #999999; }
+  .blues { background-color: #0b5d86; }
+  
+  /* Linhas com gráficos e mapas */
+  .linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 3rem;
+    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1300px;
+  }
+
+  .grafico, .mapa {
+    width: 100%;
+    height: auto;
+    min-width: 400px;
+    max-width: 650px;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  /* Força elementos internos preencherem container */
+  .grafico > *, .mapa > * {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  /* Oculta célula contagemPorBioma */
+  #observablehq-contagemPorBioma-cf89fb02 {
+    display: none;
+  }
+
+  p.credit {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-top: 2rem;
+    user-select: none;
+  }
+  p.credit a {
+    color: #2c7a7b;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  p.credit a:hover {
+    color: #319795;
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
-  <h1>Gráfico de Espécies Ameaçadas por Categoria, Bioma e Tipo</h1>
 
-  <!-- Aqui vai o seu gráfico embedado -->
-<iframe width="100%" height="158.0625" frameborder="0"
-  src="https://observablehq.com/embed/fbb99c3b8ad509ba@185?cells=viewof+biomaFiltro%2Cviewof+categoriaFiltro"></iframe>
+<header>
+  <h1>🌿 Monitoramento de Espécies Ameaçadas de Extinção no Brasil</h1>
+  <p>
+    Visualize gráficos interativos e mapas detalhados que mostram a
+    distribuição e o número de espécies ameaçadas extinção por bioma e estado.
+    Uma ferramenta essencial para a conservação ambiental e estudos científicos.
+  </p>
+</header>
+
+<!-- Cards mockados com imagens -->
+<div id="cardsGrupo">
+  <div class="card reds">
+    <img src="icons/flower.png" alt="Angiospermas" />
+    <div class="grupo">Angiospermas</div>
+    <div class="total">2266</div>
+  </div>
+  <div class="card lighttealblue">
+    <img src="icons/fish (1).png" alt="Peixes Continentais" />
+    <div class="grupo">Peixes Continentais</div>
+    <div class="total">368</div>
+  </div>
+  <div class="card oranges">
+    <img src="icons/pigeon.png" alt="Aves" />
+    <div class="grupo">Aves</div>
+    <div class="total">326</div>
+  </div>
+  <div class="card browns">
+    <img src="icons/insect.png" alt="Invertebrados Terrestres" />
+    <div class="grupo">Invertebrados Terrestres</div>
+    <div class="total">278</div>
+  </div>
+  <div class="card bluepurple">
+    <img src="icons/monkey-shape.png" alt="Mamíferos" />
+    <div class="grupo">Mamíferos</div>
+    <div class="total">191</div>
+  </div>
+  <div class="card purples">
+    <img src="icons/chameleon.png" alt="Répteis" />
+    <div class="grupo">Répteis</div>
+    <div class="total">107</div>
+  </div>
+  <div class="card yellowgreen">
+    <img src="icons/fern.png" alt="Pteridófitas" />
+    <div class="grupo">Pteridófitas</div>
+    <div class="total">100</div>
+  </div>
+  <div class="card blues">
+    <img src="icons/fish.png" alt="Peixes Marinhos" />
+    <div class="grupo">Peixes Marinhos</div>
+    <div class="total">98</div>
+  </div>
+  <div class="card teals">
+    <img src="icons/giant-squid.png" alt="Invertebrados Aquáticos" />
+    <div class="grupo">Invertebrados Aquáticos</div>
+    <div class="total">81</div>
+  </div>
+  <div class="card greens">
+    <img src="icons/frog.png" alt="Anfíbios" />
+    <div class="grupo">Anfíbios</div>
+    <div class="total">45</div>
+  </div>
+  <div class="card greys">
+    <img src="icons/moss.png" alt="Briófitas" />
+    <div class="grupo">Briófitas</div>
+    <div class="total">19</div>
+  </div>
+  <div class="card tealblues">
+    <img src="icons/tree.png" alt="Gimnospermas" />
+    <div class="grupo">Gimnospermas</div>
+    <div class="total">4</div>
+  </div>
+</div>
+
+<div class="linha">
+  <div id="observablehq-viewof-chartGrupo-cf89fb02" class="grafico"></div>
+  <div id="observablehq-mapa-cf89fb02" class="mapa"></div>
+</div>
+
+<div class="linha">
+  <div id="observablehq-viewof-chartBolhas-cf89fb02" class="grafico"></div>
+  <div id="observablehq-mapaBioma-cf89fb02" class="mapa"></div>
+</div>
+
+<div id="observablehq-contagemPorBioma-cf89fb02"></div> <!-- invisível -->
+
+<p class="credit">Credit: <a href="https://observablehq.com/d/fbb99c3b8ad509ba" target="_blank" rel="noopener noreferrer">Untitled by Ryan</a></p>
+
+<script type="module">
+  import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+  import define from "https://api.observablehq.com/d/fbb99c3b8ad509ba.js?v=4";
+
+  const runtime = new Runtime();
+
+  runtime.module(define, name => {
+    if (name === "viewof chartGrupo") return new Inspector(document.querySelector("#observablehq-viewof-chartGrupo-cf89fb02"));
+    if (name === "mapa") return new Inspector(document.querySelector("#observablehq-mapa-cf89fb02"));
+    if (name === "contagemPorBioma") return new Inspector(document.querySelector("#observablehq-contagemPorBioma-cf89fb02"));
+    if (name === "mapaBioma") return new Inspector(document.querySelector("#observablehq-mapaBioma-cf89fb02"));
+    if (name === "viewof chartBolhas") return new Inspector(document.querySelector("#observablehq-viewof-chartBolhas-cf89fb02"));
+    return ["selected","grupoSelecionado","mapaBiomasFormatado","selectedBioma","biomaSelecionado","biomaSelecionadoNorm","biomasNaoSelecionados","biomaDestacado","camadaColorida","camadaCinza"].includes(name);
+  });
+
+  window.addEventListener("load", () => {
+    const containers = [
+      "#observablehq-viewof-chartGrupo-cf89fb02",
+      "#observablehq-mapa-cf89fb02",
+      "#observablehq-viewof-chartBolhas-cf89fb02",
+      "#observablehq-mapaBioma-cf89fb02"
+    ];
+    containers.forEach(selector => {
+      const container = document.querySelector(selector);
+      if (container) {
+        Array.from(container.children).forEach(child => {
+          child.style.width = "100%";
+          child.style.height = "100%";
+          child.style.display = "block";
+        });
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
-
