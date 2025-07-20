@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to top, #e0f2f1, #b2dfdb, #80cbc4, #4db6ac);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #333;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  max-width: 900px;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5rem;
+  color: #0b4a4b;
+}
+
+header p {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  color: #555;
+}
+
+#cardsGrupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  max-width: 1300px;
+  margin-bottom: 3rem;
+}
+
+#cardsGrupo .card {
+  border-radius: 12px;
+  padding: 10px 14px;
+  width: 120px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cardsGrupo .card img {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+
+#cardsGrupo .grupo {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+#cardsGrupo .total {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.reds { background-color: #d53e4f; }
+.lighttealblue { background-color: #7fcdbb; color: #000; }
+.oranges { background-color: #fdae61; color: #000; }
+.browns { background-color: #a6611a; }
+.bluepurple { background-color: #5e3c99; }
+.purples { background-color: #8073ac; }
+.yellowgreen { background-color: #d9f0a3; color: #000; }
+.teals { background-color: #456a79; }
+.greens { background-color: #238b45; }
+.tealblues { background-color: #0b98e4; }
+.greys { background-color: #999999; }
+.blues { background-color: #0b5d86; }
+
+.linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 3rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.grafico, .mapa {
+  width: 100%;
+  height: auto;
+  min-width: 400px;
+  max-width: 650px;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.grafico > *, .mapa > * {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+#observablehq-contagemPorBioma-cf89fb02 {
+  display: none;
+}
